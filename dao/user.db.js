@@ -2,6 +2,9 @@ const {Pool, Client , Query} = require('pg');
 
 const dbConfig = require('../Config/dbConfig');
 
+
+//Connection
+
 async function query(sql){
     const pool = new Pool(dbConfig.db);
     const [results ,] = await pool.query(sql,(err,res)=>{
@@ -12,6 +15,9 @@ async function query(sql){
     });
 }
 
+
+
+//Create user table
 
 async function createUser(){
     const pool = new Pool(dbConfig.db);
@@ -28,6 +34,10 @@ async function createUser(){
     return result ; 
 }
 
+
+
+//Check user given email is exists or not in database
+
 async function existbyEmail(email){
     const pool = new Pool(dbConfig.db);
     const qr = `SELECT * FROM test.user where email = '${email}'`
@@ -43,6 +53,10 @@ async function existbyEmail(email){
     return isQuery ; 
 }
 
+
+
+//Insert user
+
 async function insertUser(firstname , lastname , mobile , email){
     const pool = new Pool(dbConfig.db);
     const qr = `INSERT INTO test.user(firstname, lastname, mobile, email) VALUES('${firstname}' , '${lastname}' , '${mobile}' , '${email}')`;
@@ -56,6 +70,9 @@ async function insertUser(firstname , lastname , mobile , email){
     pool.end() ; 
     return res.rows 
 }
+
+
+// Export functions
 
 module.exports = {
     insertUser,
