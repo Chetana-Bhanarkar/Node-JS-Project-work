@@ -28,6 +28,20 @@ async function createUser(){
     return result ; 
 }
 
+async function existbyEmail(email){
+    const pool = new Pool(dbConfig.db);
+    const qr = `SELECT * FROM test.user where email = '${email}'`
+    const res = await pool.query(qr);
+    const isQuery = res.rows.length > 0 ? true : false ; 
+    if(isQuery){
+        message : "data exists"
+    }else{
+        message : "data not exists"
+    }
+
+    pool.end() ; 
+    return isQuery ; 
+}
 
 async function insertUser(firstname , lastname , mobile , email){
     const pool = new Pool(dbConfig.db);
@@ -44,5 +58,6 @@ async function insertUser(firstname , lastname , mobile , email){
 }
 
 module.exports = {
-    insertUser
+    insertUser,
+    existbyEmail
 }
