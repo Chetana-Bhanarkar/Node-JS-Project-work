@@ -87,7 +87,25 @@ async function insertUser(firstname , lastname , mobile , email){
 }
 
 
+async function editUser(id,firstname, lastname, mobile, email){
+    const pool = new Pool(dbConfig.db);
+    const qr = `UPDATE test.user SET firstname= '${firstname}', lastname='${lastname}', mobile='${mobile}', email =  '${email}' where id = '${id}'`;
 
+    const res = await pool.query(qr);
+    if(res.rows.length > 0){
+        message :res.rows ; 
+    }
+    else{
+        message : "Data not exists";
+    }
+
+    pool.end();
+    console.log(res.rows);
+    return res.rows ; 
+}
+
+
+editUser(2,'agastya','agastya','1230000321','agastya@gmail.com   ')
 
 // Export functions
 
