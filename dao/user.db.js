@@ -54,6 +54,21 @@ async function existbyEmail(email){
 }
 
 
+// exists user by id
+
+async function existsbyId(id){
+    const pool = new Pool(dbConfig.db);
+    const qr = `select * from test.user where id = ${id}`;
+    const res = await pool.query(qr);
+    const isQuery = res.rows.length > 0 ? true : false ; 
+    if(isQuery){
+        message : res.rows ; 
+    }
+    pool.end();
+    console.log(isQuery);
+    return isQuery ; 
+}
+
 
 //Insert user
 
@@ -72,9 +87,13 @@ async function insertUser(firstname , lastname , mobile , email){
 }
 
 
+
+
 // Export functions
 
 module.exports = {
     insertUser,
-    existbyEmail
+    existbyEmail,
+    editUser,
+    existsbyId
 }
