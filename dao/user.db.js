@@ -1,10 +1,8 @@
 const {Pool, Client , Query} = require('pg');
-
 const dbConfig = require('../Config/dbConfig');
 
 
 //Connection
-
 async function query(sql){
     const pool = new Pool(dbConfig.db);
     const [results ,] = await pool.query(sql,(err,res)=>{
@@ -16,9 +14,7 @@ async function query(sql){
 }
 
 
-
 //Create user table
-
 async function createUser(){
     const pool = new Pool(dbConfig.db);
     const query = `CREATE TABLE IF NOT EXISTS test.User(
@@ -28,16 +24,13 @@ async function createUser(){
         mobile VARCHAR(100) NOT NULL,
         email VARCHAR(100) NOT NULL
     )`
-
     const result = await pool.query(query);
     pool.end()
     return result ; 
 }
 
 
-
 //Check user given email is exists or not in database
-
 async function existbyEmail(email){
     const pool = new Pool(dbConfig.db);
     const qr = `SELECT * FROM test.user where email = '${email}'`
@@ -48,14 +41,12 @@ async function existbyEmail(email){
     }else{
         message : "data not exists"
     }
-
     pool.end() ; 
     return isQuery ; 
 }
 
 
 // exists user by id
-
 async function existsbyId(id){
     const pool = new Pool(dbConfig.db);
     const qr = `select * from test.user where id = ${id}`;
@@ -71,23 +62,19 @@ async function existsbyId(id){
 
 
 //Insert user
-
 async function insertUser(firstname , lastname , mobile , email){
     const pool = new Pool(dbConfig.db);
     const qr = `INSERT INTO test.user(firstname, lastname, mobile, email) VALUES('${firstname}' , '${lastname}' , '${mobile}' , '${email}')`;
-
     const res = await pool.query(qr) ; 
-
     if(res.affectedRows){
         message : res ; 
     }
-
     pool.end() ; 
     return res.rows 
 }
 
-//Edit the user by id
 
+//Edit the user by id
 async function editUser(id,firstname, lastname, mobile, email){
     const pool = new Pool(dbConfig.db);
     const qr = `UPDATE test.user SET firstname= '${firstname}', lastname='${lastname}', mobile='${mobile}', email =  '${email}' where id = '${id}'`;
@@ -106,10 +93,7 @@ async function editUser(id,firstname, lastname, mobile, email){
 }
 
 
-editUser(2,'agastya','agastya','1230000321','agastya@gmail.com   ')
-
 // Export functions
-
 module.exports = {
     insertUser,
     existbyEmail,
