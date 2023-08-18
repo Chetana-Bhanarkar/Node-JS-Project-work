@@ -86,6 +86,7 @@ async function insertUser(firstname , lastname , mobile , email){
     return res.rows 
 }
 
+//Edit the user by id
 
 async function editUser(id,firstname, lastname, mobile, email){
     const pool = new Pool(dbConfig.db);
